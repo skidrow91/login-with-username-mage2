@@ -21,7 +21,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
 
         if (version_compare($context->getVersion(), '1.0.0') < 0) {
 
-            $connection->addColumn(
+           /* $connection->addColumn(
                 $setup->getTable('customer_entity'),
                 'username',
                 [
@@ -37,7 +37,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
                 $setup->getTable('customer_entity'),
                 $setup->getIdxName('customer_entity', ['username']),
                 ['username']
-            );
+            ); */
         }
 
         $setup->endSetup();
