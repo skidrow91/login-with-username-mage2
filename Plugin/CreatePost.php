@@ -10,6 +10,7 @@ use Magento\Framework\App\Response\RedirectInterface;
 use Magento\Framework\Controller\Result\RedirectFactory;
 use Magento\Framework\Data\Form\FormKey\Validator;
 use Magento\Framework\Message\ManagerInterface;
+use Axl\UIDLogin\Helper\Config;
 
 class CreatePost
 {
@@ -39,6 +40,10 @@ class CreatePost
      * @var Session
      */
     protected $session;
+    /**
+     * @var Config
+     */
+    protected $helperConfig;
 
     public function __construct(
         Validator $formKeyValidator = null,
@@ -47,7 +52,8 @@ class CreatePost
         CustomerRepositoryInterface $customerRepository,
         RedirectFactory $resultRedirectFactory,
         ManagerInterface $messageManager,
-        Session $session
+        Session $session,
+        Config $helperConfig
     ) {
         $this->formKeyValidator = $formKeyValidator ?: ObjectManager::getInstance()->get(Validator::class);
         $this->customerFactory = $customerFactory;
@@ -56,6 +62,7 @@ class CreatePost
         $this->resultRedirectFactory = $resultRedirectFactory;
         $this->messageManager = $messageManager;
         $this->session = $session;
+        $this->helperConfig = $helperConfig;
     }
 
     public function aroundExecute(\Magento\Customer\Controller\Account\CreatePost $subject, \Closure $proceed)
