@@ -6,5 +6,12 @@
     </type>
     <type name="Magento\Customer\Controller\Account\LoginPost">
         <plugin name="loginWithUsername" type="Axl\UIDLogin\Plugin\LoginPost" sortOrder="1" />
-    </type>    
+    </type>
+    <type name="Magento\Checkout\Model\CompositeConfigProvider">
+        <arguments>
+            <argument name="configProviders" xsi:type="array">
+                <item name="axl_uidlogin_checkout_config_provider" xsi:type="object">Axl\UIDLogin\Model\CheckoutConfigProvider</item>
+            </argument>
+        </arguments>
+    </type> 
 </config>
