@@ -8,8 +8,9 @@ define([
     'Magento_Checkout/js/model/quote',
     'Magento_Checkout/js/checkout-data',
     'Magento_Checkout/js/model/full-screen-loader',
-    'mage/validation'
-], function ($, Component, ko, customer, checkEmailAvailability, loginAction, quote, checkoutData, fullScreenLoader) {
+    'Axl_UIDLogin/js/action/check-username-availability',
+    'mage/validation',
+], function ($, Component, ko, customer, checkEmailAvailability, loginAction, quote, checkoutData, fullScreenLoader, checkUsernameAvailability) {
     'use strict';
 
     var validatedEmail;
@@ -32,11 +33,14 @@ define([
             template: 'Magento_Checkout/form/element/email',
             email: checkoutData.getInputFieldEmailValue(),
             emailFocused: false,
+            uid: '',
             isLoading: false,
             isPasswordVisible: false,
+            isEmailVisible: false,
             listens: {
                 email: 'emailHasChanged',
-                emailFocused: 'validateEmail'
+                emailFocused: 'validateEmail',
+                uid: 'usernameHasChanged'
             },
             ignoreTmpls: {
                 email: true
@@ -45,9 +49,11 @@ define([
         checkDelay: 2000,
         checkRequest: null,
         isEmailCheckComplete: null,
+        isUidCheckComplete: null,
         isCustomerLoggedIn: customer.isLoggedIn,
         forgotPasswordUrl: window.checkoutConfig.forgotPasswordUrl,
         emailCheckTimeout: 0,
+        uidCheckTimeout: 0,
 
         /**
          * Initializes observable properties of instance
@@ -56,7 +62,7 @@ define([
          */
         initObservable: function () {
             this._super()
-                .observe(['email', 'emailFocused', 'isLoading', 'isPasswordVisible']);
+                .observe(['email', 'emailFocused', 'isLoading', 'isPasswordVisible', 'uid', 'isEmailVisible']);
 
             return this;
         },
@@ -195,6 +201,40 @@ define([
             else {
                 return false;
             }
+        },
+
+        /**
+         * Check username existing.
+         */
+        checkUsernameAvailability: function () {
+            this.validateRequest();
+            this.isUidCheckComplete = $.Deferred();
+            this.isLoading(true);
+            this.checkRequest = checkUsernameAvailability(this.isUidCheckComplete, this.uid());
+
+            $.when(this.isUidCheckComplete).done(function () {
+                this.isPasswordVisible(false);
+                this.isEmailVisible(true);
+            }.bind(this)).fail(function () {
+                this.isPasswordVisible(true);
+                this.isEmailVisible(false);
+                // checkoutData.setCheckedEmailValue(this.email());
+            }.bind(this)).always(function () {
+                this.isLoading(false);
+            }.bind(this));
+        },
+
+        /**
+         * Callback on changing username property
+         */
+        usernameHasChanged: function () {
+            var self = this;
+
+            clearTimeout(this.uidCheckTimeout);
+
+            this.uidCheckTimeout = setTimeout(function () {
+                self.checkUsernameAvailability();
+            }, self.checkDelay);
         }
     });
 });
