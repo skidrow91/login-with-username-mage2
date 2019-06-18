@@ -18,14 +18,14 @@
                         data-bind="
                             textInput: uid,
                             mageInit: {'mage/trim-input':{}}"
-                        name="username"
+                        name="uid"
                         data-validate="{required:true}"
                         id="uid" />
                 <!-- ko template: 'ui/form/element/helper/tooltip' --><!-- /ko -->
                 <span class="note" data-bind="fadeVisible: isPasswordVisible() == false"><!-- ko i18n: 'You can create an account after checkout.'--><!-- /ko --></span>
             </div>
         </div>
-        <div class="hidden-fields required" data-bind="fadeVisible: isEmailVisible">
+        <div class="field required" data-bind="fadeVisible: isEmailVisible">
             <label class="label" for="customer-email">
                 <span data-bind="i18n: 'Email Address'"></span>
             </label>
@@ -33,13 +33,12 @@
                 <input class="input-text"
                         type="email"
                         data-bind="
-                            textInput: email,
+                            textInput: extEmail,
                             hasFocus: emailFocused,
                             mageInit: {'mage/trim-input':{}}"
                         name="username"
                         data-validate="{required:true, 'validate-email':true}"
                         id="customer-email" />
-                <!-- ko template: 'ui/form/element/helper/tooltip' --><!-- /ko -->
             </div>
         </div>
         <!--/ko-->

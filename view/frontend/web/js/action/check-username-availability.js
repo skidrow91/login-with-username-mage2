@@ -4,11 +4,11 @@ define([
 ], function (storage, urlBuilder) {
     'use strict';
 
-    return function (deferred, email) {
+    return function (deferred, uid) {
         return storage.post(
-            urlBuilder.createUrl('/customers/isEmailAvailable', {}),
+            urlBuilder.createUrl('/customers/isUsernameAvailable', {}),
             JSON.stringify({
-                customerEmail: email
+                username: uid
             }),
             false
         ).done(function (isUserAvailable) {
