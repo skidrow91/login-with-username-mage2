@@ -230,7 +230,9 @@ define([
          * Check extEmail existing.
          */
         checkExtEmailAvailability: function () {
+            var elm = $('form[data-role=email-with-possible-login] input[name=username]');
             $('#customer-email-error').remove();
+            elm.removeClass('mage-error');
             this.validateRequest();
             this.isEmailCheckComplete = $.Deferred();
             this.isLoading(true);
@@ -238,8 +240,8 @@ define([
 
             $.when(this.isEmailCheckComplete).done(function () {
             }.bind(this)).fail(function () {
-                // alert($('form[data-role=email-with-possible-login] input[name=username]').val());
-                $('form[data-role=email-with-possible-login] input[name=username]').after('<div for="customer-email" generated="true" class="mage-error" id="customer-email-error">This email has been taken.</div>');
+                elm.addClass('mage-error');
+                elm.after('<div for="customer-email" generated="true" class="mage-error" id="customer-email-error">This email has been taken.</div>');
             }.bind(this)).always(function () {
                 this.isLoading(false);
             }.bind(this));
