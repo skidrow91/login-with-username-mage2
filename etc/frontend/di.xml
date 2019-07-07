@@ -7,6 +7,9 @@
     <type name="Magento\Customer\Controller\Account\LoginPost">
         <plugin name="loginWithUsername" type="Axl\UIDLogin\Plugin\LoginPost" sortOrder="1" />
     </type>
+    <!-- <type name="Magento\Customer\Controller\Ajax\Login">
+        <plugin name="ajaxLoginWithUsername" type="Axl\UIDLogin\Plugin\AjaxLogin" sortOrder="1" />
+    </type> -->
     <type name="Magento\Checkout\Model\CompositeConfigProvider">
         <arguments>
             <argument name="configProviders" xsi:type="array">

@@ -74,12 +74,12 @@ class InstallData implements InstallDataInterface
             $attributeCode);
 
         $usernameAttribute = $this->eavConfig->getAttribute(CustomerMetadataInterface::ENTITY_TYPE_CUSTOMER, $attributeCode);
-        $usernameAttribute->setData('used_in_forms', [
-            'adminhtml_customer',
-            'checkout_register',
-            'customer_account_create',
-            'customer_account_edit'
-        ]);
+        // $usernameAttribute->setData('used_in_forms', [
+        //     'adminhtml_customer',
+        //     'checkout_register',
+        //     'customer_account_create',
+        //     'customer_account_edit'
+        // ]);
         $usernameAttribute->getResource()->save($usernameAttribute);
 
         $setup->endSetup();

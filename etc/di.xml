@@ -1,4 +1,7 @@
 <?xml version="1.0" ?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
 	<preference for="Axl\UIDLogin\Api\AccountManagementInterface" type="Axl\UIDLogin\Model\AccountManagement"/>
+	<type name="Magento\Customer\Controller\Ajax\Login">
+        <plugin name="ajaxLoginWithUsername" type="Axl\UIDLogin\Plugin\AjaxLogin" sortOrder="1" />
+    </type>
 </config>
